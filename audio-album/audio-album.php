@@ -4,13 +4,13 @@ Plugin Name: Audio Album
 Plugin URI: https://cubecolour.co.uk/audio-album
 Description: Provides shortcodes to format native WordPress audio players as an album of tracks with additional info
 Author: cubecolour
-Version: 1.5.0
+Version: 1.5.1
 Text Domain: audio-album
 Domain Path: /languages/
 Author URI: https://cubecolour.co.uk/
 License: GPLv2
 
-  Copyright 2013-2023 Michael Atkins
+  Copyright 2013-2025 Michael Atkins
 
   michael@cubecolour.co.uk
 
@@ -355,7 +355,7 @@ function cc_audiotrack_shortcode( $atts, $content = null ) {
 	$args['buttontext'] = esc_attr( $args['buttontext'] );
 
 	if ( $args['songwriter']  !== '') {
-		$args['songwriter'] = '<span class="songwriter">(' . $args['songwriter'] . ')</span>';
+		$args['songwriter'] = '<span class="songwriter">(' . sanitize_text_field( $args['songwriter'] ) . ')</span>';
 	}
 
 	if ( $args['src'] !== ''){
@@ -395,7 +395,9 @@ function cc_audiotrack_shortcode( $atts, $content = null ) {
 	}
 
 	if ( $args['buttonlink']  !== '#') {
-		$popupbutton = '<a href="'. $cc_siteurl .'/?p=' . esc_attr( $args['buttonlink'] ) . '&pop=yes" class="info-popup" data-width="' . esc_attr( $args['width'] ) . '" data-height="' . esc_attr( $args['height']) . '">' . esc_attr( $args['buttontext']) . '</a>';
+		$nonce = wp_create_nonce( 'cc_audioalbum_popup' ); // Generate a nonce
+		$popupbutton = '<a href="'. $cc_siteurl .'/?p=' . esc_attr( $args['buttonlink'] ) . '&pop=yes&_wpnonce=' . $nonce . '" class="info-popup" data-width="' . esc_attr( $args['width'] ) . '" data-height="' . esc_attr( $args['height']) . '">' . esc_attr( $args['buttontext']) . '</a>';
+
 	}
 
 	$audiotrack = '<span class="songtitle">' . $args['title'] . '</span>' . $args['songwriter'] . '<span class="audiobutton">' . $popupbutton . '</span>';
@@ -419,8 +421,13 @@ if ( basename( get_template_directory() ) == 'genesis' ) {
 }
 
 function cc_popup_audioalbum_template( $template ) {
-	if( isset( $_GET['pop']) && 'yes' == $_GET['pop'] )
-		$template = plugin_dir_path( __FILE__ ) . 'templates/genesis-audioalbum-popup.php';
+if ( isset( $_GET['pop'] ) && 'yes' === $_GET['pop'] ) {
+    if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'cc_audioalbum_popup' ) ) {
+        $template = plugin_dir_path( __FILE__ ) . 'templates/genesis-audioalbum-popup.php';
+    } else {
+        wp_die( esc_html__( 'Invalid request.', 'audio-album' ) ); // Prevent unauthorized access
+    }
+}
 
 	return $template;
 }

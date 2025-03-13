@@ -1,10 +1,10 @@
 === Audio Album ===
 Contributors: numeeja
 Donate link: https://cubecolour.co.uk/wp
-Tags: audio, album, playlist, music, mp3, ogg, m4a, wma, wav, media
+Tags: audio, album, playlist, music, mp3
 Requires at least: 4.9
-Tested up to: 6.5
-Stable tag: 1.5.0
+Tested up to: 6.7
+Stable tag: 1.5.1
 License: GPLv2
 
 Displays a collection of audio tracks as an audio album using the native WordPress audio features. Includes a customizer section.
@@ -170,6 +170,9 @@ If the conditions for obtaining free support on the public forum are not compati
 
 == Changelog ==
 
+= 1.5.1 =
+* Various bugfixes
+
 = 1.5.0 =
 * Removed jQuery as dependency on the front end (although mediaelement still requires jQuery)
 
@@ -243,6 +246,9 @@ If the conditions for obtaining free support on the public forum are not compati
 
 == Upgrade Notice ==
 
+= 1.5.1 =
+* Various bugfixes
+
 = 1.5.0 =
 * Removed jQuery as dependency on the front end (although mediaelement still requires jQuery)
 
@@ -269,12 +275,7 @@ Various minor bug fixes, audio album customizer section.
 
 = 1.2.0 =
 
-* improve delimiting for comments
-* add default value for preload shortcode param: metadata so total track time appears in player
-* improved parameter value sanitization
-* use array for shortcode parameters instead of extract
-* use constant for plugin version
-* use visibility instead of display for delaying appearance of tracks
+* various fixes, see changelog
 
 = 1.1.0 =
 

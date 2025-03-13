@@ -23,7 +23,6 @@ function cc_audioalbum_customize_register( $wp_customize ){
 			'priority'			=> '80',
 			'title'				=> __( 'Audio Album', 'audio-album' ),
 			'capability'		=> 'edit_theme_options',
-			'description'		=>  __( '', 'audio-album' ),
 		)
 	);
 
