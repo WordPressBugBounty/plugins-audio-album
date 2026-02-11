@@ -3,7 +3,7 @@ Contributors: numeeja
 Donate link: https://cubecolour.co.uk/wp
 Tags: audio, album, playlist, music, mp3
 Requires at least: 4.9
-Tested up to: 6.7
+Tested up to: 6.8
 Stable tag: 1.5.1
 License: GPLv2
 
